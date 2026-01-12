@@ -508,12 +508,29 @@ docker push kirobgt/mobile-php-api:latest
 
 ### 9.2 Compétences Acquises
 
-| Domaine | Compétences |
-|---------|-------------|
-| **🐳 Conteneurisation** | Docker, Dockerfile, Images, Conteneurs |
-| **📦 Orchestration** | Docker Compose, Réseaux, Volumes, Dépendances |
-| **⚙️ CI/CD** | GitHub Actions, Automatisation, Docker Hub |
-| **🔧 Production** | Sécurité, Monitoring, Ressources, Scalabilité |
+```mermaid
+mindmap
+  root((🎓 Compétences<br/>DevOps))
+    🐳 Conteneurisation
+      Docker
+      Dockerfile
+      Images
+      Conteneurs
+    📦 Orchestration
+      Docker Compose
+      Réseaux
+      Volumes
+      Dépendances
+    ⚙️ CI/CD
+      GitHub Actions
+      Automatisation
+      Docker Hub
+    🔧 Production
+      Sécurité
+      Monitoring
+      Ressources
+      Scalabilité
+```
 
 ### 9.3 Perspectives d'Amélioration
 
