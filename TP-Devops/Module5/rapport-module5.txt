@@ -1,0 +1,19 @@
+# Module 5: Registre d'images (Docker Hub)
+
+## Statut: COMPLET 
+
+## Compte Docker Hub
+**Username**: `kirobgt`  
+**Repository**: `kirobgt/mobile-php-api`  
+**URL**: https://hub.docker.com/r/kirobgt/mobile-php-api
+
+## Commandes exécutées
+```bash
+# 1. Tagging selon convention Docker Hub
+docker tag mobile-php-api:latest kirobgt/mobile-php-api:latest
+
+# 2. Connexion à Docker Hub
+docker login --username kirobgt
+
+# 3. Push vers le registre public
+docker push kirobgt/mobile-php-api:latest

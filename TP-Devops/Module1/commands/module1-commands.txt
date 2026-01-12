@@ -1,0 +1,49 @@
+# 1. Stop and remove previous test container
+docker stop test-postgres
+docker rm test-postgres
+
+# 2. Create production PostgreSQL container (TP Step 4)
+docker run -d \
+  --name tp-postgres \
+  -p 2345:5432 \
+  -e POSTGRES_DB=mobile_backend_db \
+  -e POSTGRES_USER=admin \
+  -e POSTGRES_PASSWORD=securePass123 \
+  --memory="50m" \
+  --cpus="1.0" \
+  -v "$(pwd)/db_data:/var/lib/postgresql/data" \
+  postgres:15
+
+# 3. Verify container is running (TP Step 2)
+docker ps
+
+
+# 4. Create UUID extension and mobile_sessions table (using PowerShell here-string)
+@"
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE TABLE IF NOT EXISTS mobile_sessions (
+    device_id UUID NOT NULL PRIMARY KEY,
+    model_name varchar(100) NOT NULL,
+    last_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+"@ | docker exec -i tp-postgres psql -U admin -d mobile_backend_db
+
+# 5. Verify table creation
+docker exec -it tp-postgres psql -U admin -d mobile_backend_db -c "\dt mobile_sessions"
+
+
+
+# 6. Insert test data
+docker exec -it tp-postgres psql -U admin -d mobile_backend_db -c "INSERT INTO mobile_sessions (device_id, model_name) VALUES (gen_random_uuid(), 'Android Device 1');"
+
+# 7. Verify data exists
+docker exec -it tp-postgres psql -U admin -d mobile_backend_db -c "SELECT * FROM mobile_sessions;"
+
+# 8. Restart container and verify persistence (TP Step 2)
+docker restart tp-postgres
+docker exec -it tp-postgres psql -U admin -d mobile_backend_db -c "SELECT * FROM mobile_sessions;"
+
+
+# 9. Check container resource usage
+docker stats tp-postgres --no-stream
+

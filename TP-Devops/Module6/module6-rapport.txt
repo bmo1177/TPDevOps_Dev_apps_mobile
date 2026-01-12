@@ -1,0 +1,21 @@
+Module 6: Intégration Continue (GitHub Actions)
+
+Workflow GitHub Actions créé
+
+Fichier : .github/workflows/docker-build.yml
+Configuration CI/CD automatisée déclenchée sur chaque push.
+
+Configuration des secrets
+DOCKER_USERNAME et DOCKER_PASSWORD ajoutés aux secrets GitHub
+
+Authentification sécurisée avec Docker Hub
+
+Exécutions réussies
+3 workflow runs complets avec succès 
+
+Durée moyenne : 1 minute par build
+
+Images poussées vers kirobgt/mobile-php-api:latest
+
+Note Build Android
+Build APK non implémenté - projet Android absent du repository.

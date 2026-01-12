@@ -1,0 +1,41 @@
+services:
+  # MySQL Database
+  database:
+    image: mysql:8
+    container_name: mobile-mysql-db
+    environment:
+      MYSQL_DATABASE: ouareddb
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: securePass123
+      MYSQL_ROOT_PASSWORD: rootPassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - mobile-network
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+          cpus: '1.0'
+
+  # PHP Backend - NOW BUILDING FROM Dockerfile
+  php-backend:
+    build: .
+    container_name: mobile-php-api
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html/
+    depends_on:
+      - database
+    networks:
+      - mobile-network
+
+volumes:
+  mysql_data:
+
+networks:
+  mobile-network:
+    driver: bridge
