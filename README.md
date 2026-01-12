@@ -483,12 +483,12 @@ docker push kirobgt/mobile-php-api:latest
 
 | Capture | Description |
 |---------|-------------|
-| ![GitHub Repo](TP-Devops/Module6/screenshots/github%20repo.png) | Repository GitHub |
+| ![GitHub Repo](TP-Devops/Module6/screenshots/github-repo.png) | [Repository GitHub](https://github.com/bmo1177/TPDevOps_Dev_apps_mobile) |
 | ![Secrets](TP-Devops/Module6/screenshots/secrets.png) | Secrets configurés |
 | ![Code](TP-Devops/Module6/screenshots/code.png) | Code workflow |
 | ![Workflow Running](TP-Devops/Module6/screenshots/workflow%20running.png) | Workflow en exécution |
 | ![Workflow Details](TP-Devops/Module6/screenshots/workflow%20details.png) | Détails workflow |
-| ![Docker Hub Repo](TP-Devops/Module6/screenshots/docker%20hub%20repo.png) | Docker Hub Repository |
+| ![Docker Hub Repo](TP-Devops/Module6/screenshots/docker-hub-repo.png) | Docker Hub Repository |
 
 ---
 
