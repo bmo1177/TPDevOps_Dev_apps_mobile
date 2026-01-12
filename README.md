@@ -77,8 +77,7 @@ Une application Python/TensorFlow fonctionne en développement mais échoue lors
 
 ### 1.2 Solution : Méthodologie DevOps
 
-> [!TIP]
-> **Docker** permet d'encapsuler l'application avec toutes ses dépendances, garantissant un comportement identique sur n'importe quel environnement.
+> **💡 Conseil** : Docker permet d'encapsuler l'application avec toutes ses dépendances, garantissant un comportement identique sur n'importe quel environnement.
 
 ### 1.3 Objectifs Pédagogiques
 
@@ -108,21 +107,28 @@ Une application Python/TensorFlow fonctionne en développement mais échoue lors
 
 ### 2.2 Architecture Cible
 
-```mermaid
-graph TB
-    subgraph "🔄 CI/CD Pipeline"
-        GH[📁 GitHub Repository] --> GA[⚙️ GitHub Actions]
-        GA --> DH[🐳 Docker Hub]
-    end
-    
-    subgraph "🐳 Docker Compose Stack"
-        DH --> API[🌐 PHP Backend<br/>Port 8080]
-        API --> DB[(🗄️ MySQL<br/>Port 3306)]
-    end
-    
-    subgraph "📱 Client Mobile"
-        AND[Android App] --> API
-    end
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                      🔄 CI/CD Pipeline                          │
+│  ┌──────────────┐    ┌─────────────────┐    ┌──────────────┐   │
+│  │ 📁 GitHub    │───▶│ ⚙️ GitHub       │───▶│ 🐳 Docker    │   │
+│  │ Repository   │    │ Actions         │    │ Hub          │   │
+│  └──────────────┘    └─────────────────┘    └──────────────┘   │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                   🐳 Docker Compose Stack                       │
+│  ┌──────────────────┐         ┌──────────────────┐             │
+│  │ 🌐 PHP Backend   │────────▶│ 🗄️ MySQL        │             │
+│  │ Port 8080        │         │ Port 3306        │             │
+│  └──────────────────┘         └──────────────────┘             │
+└─────────────────────────────────────────────────────────────────┘
+                                ▲
+                                │
+                    ┌──────────────────┐
+                    │ 📱 Android App   │
+                    └──────────────────┘
 ```
 
 ---
@@ -199,17 +205,13 @@ Les données sont stockées dans le **volume Docker** `db_data` mappé au réper
 
 ### 3.5 📸 Preuves Visuelles - Module 1
 
-````carousel
-![Conteneurs Docker actifs](TP-Devops/Module1/screenshots/docker-ps.png)
-<!-- slide -->
-![Structure de la base de données](TP-Devops/Module1/screenshots/Database%20Structure%20Proof.png)
-<!-- slide -->
-![Persistance des données vérifiée](TP-Devops/Module1/screenshots/Data%20Persistence%20Proof.png)
-<!-- slide -->
-![Volume db_data créé](TP-Devops/Module1/screenshots/Volume%20Directory%20Proof.png)
-<!-- slide -->
-![Limites ressources respectées](TP-Devops/Module1/screenshots/Resource%20Limits%20Proof.png)
-````
+| Capture | Description |
+|---------|-------------|
+| ![docker-ps](TP-Devops/Module1/screenshots/docker-ps.png) | Conteneurs Docker actifs |
+| ![Database Structure](TP-Devops/Module1/screenshots/Database%20Structure%20Proof.png) | Structure de la base de données |
+| ![Data Persistence](TP-Devops/Module1/screenshots/Data%20Persistence%20Proof.png) | Persistance des données vérifiée |
+| ![Volume Directory](TP-Devops/Module1/screenshots/Volume%20Directory%20Proof.png) | Volume db_data créé |
+| ![Resource Limits](TP-Devops/Module1/screenshots/Resource%20Limits%20Proof.png) | Limites ressources respectées |
 
 ---
 
@@ -259,8 +261,7 @@ services:
 
 ### 4.3 Problèmes Rencontrés & Solutions
 
-> [!WARNING]
-> **Erreur OOM (Out of Memory)** : MySQL 8 nécessite au minimum 256MB de RAM pour l'initialisation. La limite de 50MB du TP provoque un `kill code 137`.
+> ⚠️ **Attention** : MySQL 8 nécessite au minimum 256MB de RAM pour l'initialisation. La limite de 50MB du TP provoque un `kill code 137`.
 
 | Problème | Solution |
 |----------|----------|
@@ -270,21 +271,15 @@ services:
 
 ### 4.4 📸 Preuves Visuelles - Module 2
 
-````carousel
-![Structure Backend PHP](TP-Devops/Module2/screenshots/Backend%20Structure.png)
-<!-- slide -->
-![Dockerfile](TP-Devops/Module2/screenshots/Dockerfile%20Content.png)
-<!-- slide -->
-![Extensions PHP installées](TP-Devops/Module2/screenshots/PHP%20Extensions%20Installed.png)
-<!-- slide -->
-![Services en exécution](TP-Devops/Module2/screenshots/both%20services%20running.png)
-<!-- slide -->
-![Vérification BDD](TP-Devops/Module2/screenshots/Database%20Verification.png)
-<!-- slide -->
-![Connexion API réussie](TP-Devops/Module2/screenshots/Successful%20API%20Connection.png)
-<!-- slide -->
-![Endpoints API](TP-Devops/Module2/screenshots/API%20Endpoint%20Examples.png)
-````
+| Capture | Description |
+|---------|-------------|
+| ![Backend Structure](TP-Devops/Module2/screenshots/Backend%20Structure.png) | Structure Backend PHP |
+| ![Dockerfile](TP-Devops/Module2/screenshots/Dockerfile%20Content.png) | Contenu du Dockerfile |
+| ![PHP Extensions](TP-Devops/Module2/screenshots/PHP%20Extensions%20Installed.png) | Extensions PHP installées |
+| ![Services Running](TP-Devops/Module2/screenshots/both%20services%20running.png) | Services en exécution |
+| ![Database Verification](TP-Devops/Module2/screenshots/Database%20Verification.png) | Vérification BDD |
+| ![API Connection](TP-Devops/Module2/screenshots/Successful%20API%20Connection.png) | Connexion API réussie |
+| ![API Endpoints](TP-Devops/Module2/screenshots/API%20Endpoint%20Examples.png) | Endpoints API |
 
 ---
 
@@ -331,7 +326,9 @@ docker images | grep mobile-php-api
 
 ### 5.4 📸 Preuve Visuelle - Module 3
 
-![Scripts de build automatisé](TP-Devops/Module3/screenshots/build%20script.png)
+| Capture | Description |
+|---------|-------------|
+| ![Build Script](TP-Devops/Module3/screenshots/build%20script.png) | Scripts de build automatisé |
 
 ---
 
@@ -383,16 +380,24 @@ networks:
 
 ### 6.2 Architecture Réseau
 
-```mermaid
-graph LR
-    subgraph "🔒 Réseau Privé: mobile-network"
-        A[🌐 php-backend<br/>8080:80] -->|mysql://database:3306| B[(🗄️ database<br/>3306:3306)]
-    end
-    C[📱 Android<br/>10.0.2.2:8080] --> A
+```
+┌─────────────────────────────────────────────────────────────┐
+│              🔒 Réseau Privé: mobile-network                │
+│                                                             │
+│  ┌─────────────────┐         ┌─────────────────┐           │
+│  │ 🌐 php-backend  │────────▶│ 🗄️ database    │           │
+│  │ 8080:80         │  MySQL  │ 3306:3306       │           │
+│  └─────────────────┘         └─────────────────┘           │
+│          ▲                                                  │
+└──────────│──────────────────────────────────────────────────┘
+           │
+   ┌───────────────┐
+   │ 📱 Android    │
+   │ 10.0.2.2:8080 │
+   └───────────────┘
 ```
 
-> [!IMPORTANT]
-> **Pour les émulateurs Android** : L'IP `10.0.2.2` représente l'hôte depuis l'émulateur. Utilisez cette IP au lieu de `localhost`.
+> ℹ️ **Important** : Pour les émulateurs Android, l'IP `10.0.2.2` représente l'hôte depuis l'émulateur. Utilisez cette IP au lieu de `localhost`.
 
 ### 6.3 Vérifications Effectuées
 
@@ -403,13 +408,11 @@ graph LR
 
 ### 6.4 📸 Preuves Visuelles - Module 4
 
-````carousel
-![API fonctionnelle](TP-Devops/Module4/screenshots/API%20Working%20.png)
-<!-- slide -->
-![Communication réseau](TP-Devops/Module4/screenshots/Network%20Communication.png)
-<!-- slide -->
-![État du système](TP-Devops/Module4/screenshots/System%20Status.png)
-````
+| Capture | Description |
+|---------|-------------|
+| ![API Working](TP-Devops/Module4/screenshots/API%20Working%20.png) | API fonctionnelle |
+| ![Network Communication](TP-Devops/Module4/screenshots/Network%20Communication.png) | Communication réseau |
+| ![System Status](TP-Devops/Module4/screenshots/System%20Status.png) | État du système |
 
 ---
 
@@ -438,13 +441,11 @@ docker push kirobgt/mobile-php-api:latest
 
 ### 7.3 📸 Preuves Visuelles - Module 5
 
-````carousel
-![Tagging réussi](TP-Devops/Module5/screenshots/Successful%20Tagging.png)
-<!-- slide -->
-![Login Docker Hub](TP-Devops/Module5/screenshots/Successful%20Login.png)
-<!-- slide -->
-![Push réussi](TP-Devops/Module5/screenshots/Successful%20Push.png)
-````
+| Capture | Description |
+|---------|-------------|
+| ![Tagging](TP-Devops/Module5/screenshots/Successful%20Tagging.png) | Tagging réussi |
+| ![Login](TP-Devops/Module5/screenshots/Successful%20Login.png) | Login Docker Hub |
+| ![Push](TP-Devops/Module5/screenshots/Successful%20Push.png) | Push réussi |
 
 ---
 
@@ -463,12 +464,11 @@ docker push kirobgt/mobile-php-api:latest
 
 ### 8.3 Pipeline Automatisé
 
-```mermaid
-graph LR
-    A[📤 Push Code] --> B[🔍 Trigger Workflow]
-    B --> C[🔨 Build Image]
-    C --> D[🐳 Push Docker Hub]
-    D --> E[✅ Image Disponible]
+```
+┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+│ 📤 Push Code │───▶│ 🔍 Trigger   │───▶│ 🔨 Build     │───▶│ 🐳 Push      │
+│              │    │ Workflow     │    │ Image        │    │ Docker Hub   │
+└──────────────┘    └──────────────┘    └──────────────┘    └──────────────┘
 ```
 
 ### 8.4 Résultats
@@ -481,19 +481,14 @@ graph LR
 
 ### 8.5 📸 Preuves Visuelles - Module 6
 
-````carousel
-![Repository GitHub](TP-Devops/Module6/screenshots/github%20repo.png)
-<!-- slide -->
-![Secrets configurés](TP-Devops/Module6/screenshots/secrets.png)
-<!-- slide -->
-![Code workflow](TP-Devops/Module6/screenshots/code.png)
-<!-- slide -->
-![Workflow en exécution](TP-Devops/Module6/screenshots/workflow%20running.png)
-<!-- slide -->
-![Détails workflow](TP-Devops/Module6/screenshots/workflow%20details.png)
-<!-- slide -->
-![Docker Hub Repository](TP-Devops/Module6/screenshots/docker%20hub%20repo.png)
-````
+| Capture | Description |
+|---------|-------------|
+| ![GitHub Repo](TP-Devops/Module6/screenshots/github%20repo.png) | Repository GitHub |
+| ![Secrets](TP-Devops/Module6/screenshots/secrets.png) | Secrets configurés |
+| ![Code](TP-Devops/Module6/screenshots/code.png) | Code workflow |
+| ![Workflow Running](TP-Devops/Module6/screenshots/workflow%20running.png) | Workflow en exécution |
+| ![Workflow Details](TP-Devops/Module6/screenshots/workflow%20details.png) | Détails workflow |
+| ![Docker Hub Repo](TP-Devops/Module6/screenshots/docker%20hub%20repo.png) | Docker Hub Repository |
 
 ---
 
@@ -513,26 +508,12 @@ graph LR
 
 ### 9.2 Compétences Acquises
 
-```mermaid
-mindmap
-  root((DevOps))
-    Conteneurisation
-      Docker
-      Dockerfile
-      Images
-    Orchestration
-      Docker Compose
-      Réseaux
-      Volumes
-    CI/CD
-      GitHub Actions
-      Automatisation
-      Docker Hub
-    Production
-      Sécurité
-      Monitoring
-      Scalabilité
-```
+| Domaine | Compétences |
+|---------|-------------|
+| **🐳 Conteneurisation** | Docker, Dockerfile, Images, Conteneurs |
+| **📦 Orchestration** | Docker Compose, Réseaux, Volumes, Dépendances |
+| **⚙️ CI/CD** | GitHub Actions, Automatisation, Docker Hub |
+| **🔧 Production** | Sécurité, Monitoring, Ressources, Scalabilité |
 
 ### 9.3 Perspectives d'Amélioration
 
@@ -544,14 +525,14 @@ mindmap
 ---
 
 <p align="center">
-  <strong>Université Ibn Khaldoun – Tiaret</strong><br/>
-  Master 2 Génie Logiciel – Année Universitaire 2025/2026<br/>
-  <em>Module DevOps & Déploiement</em>
+  <strong>Université Ibn Khaldoun - Tiaret</strong><br/>
+  Master 2 Génie Logiciel - Année Universitaire 2025/2026<br/>
+  <em>Module Developpement d'applications mobiles</em>
 </p>
 
 ---
 
 <p align="center">
-  <sub>📧 Contact encadrant : <a href="mailto:a_ouared@esi.dz">a_ouared@esi.dz</a></sub><br/>
-  <sub>📝 Objet email : [TP DevOps] TP2 Nom Prénom</sub>
+  <sub>📧 Contact enseignant : <a href="mailto:a_ouared@esi.dz">a_ouared@esi.dz</a></sub><br/>
+  <sub>📝 Objet email : [TP DevOps] Belalia Mohamed Oussama</sub>
 </p>
